@@ -1,0 +1,18 @@
+pub game fn World.Main() {
+    Camera(body=@(0,0), radius=@(BoundaryRadiusX, BoundaryRadiusY))
+
+    ButtonRemap(KeyW, ArrowUp)
+    ButtonRemap(KeyA, ArrowLeft)
+    ButtonRemap(KeyS, ArrowDown)
+    ButtonRemap(KeyD, ArrowRight)
+    
+    KeyboardVirtualJoystick(up=ArrowUp, left=ArrowLeft, right=ArrowRight, down=ArrowDown)
+
+    while !QueryAnyPlayer {
+        await PlayerJoined
+    }
+    
+    loop {
+        await PlayOneRound
+    }
+}

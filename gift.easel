@@ -1,0 +1,21 @@
+pub collect World.AllGifts
+
+pub fn gift.Gift(pos) {
+    use body=gift
+    use radius=TileRadius, shape=Equilateral(numPoints=4, angle=0.125rev)
+    use color=#f80
+    Body(pos=, noRotation=true)
+    PolygonCollider(category=Category:Gift)
+    PolygonSprite
+
+    DecaySpeed
+
+    give AllGifts(gift)
+
+    on BeforeCollide that {
+        if that.Category.Overlaps(Category:Monster) {
+            repeat 5 { Spark(speed=10, luminous=1) }
+            Expire
+        }
+    }
+}

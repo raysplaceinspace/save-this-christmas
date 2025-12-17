@@ -1,0 +1,67 @@
+pub const TileRadius = 1
+pub const TileSize = TileRadius*2
+
+pub const NumCols = 21
+pub const NumRows = 19
+
+
+pub const TileMap1 = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 2, 0, 1, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 3, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 2, 0, 1, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+]
+
+
+pub const CenterTileCol = NumCols / 2
+pub const CenterTileRow = NumRows / 2
+
+pub const BoundaryRadiusX = TileRadius * NumCols
+pub const BoundaryRadiusY = TileRadius * NumRows
+
+pub fn this.SubspawnMap(tileMap) {
+    for i, t in tileMap {
+        let col = i % NumCols
+        let row = Floor(i / NumCols)
+        let pos = @(TileSize * (col - CenterTileCol), TileSize * (row - CenterTileRow))
+        
+        if t == 0 {
+            // empty tile
+        } else if t == 1 {
+            Subspawn obstacle {
+                House1(pos=)
+            }
+        } else if t == 2 {
+            Subspawn gift {
+                Gift(pos=)
+            }
+        } else if t == 3 {
+            Subspawn obstacle {
+                ChristmasTree(pos=)
+            }
+        } else if t == 4 {
+            Subspawn {
+                HeroSpawner(pos=)
+            }
+        } else if t == 5{
+            Subspawn monster {
+                Monster(pos=)
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+pub await fn PlayOneRound() {
+    await Spawn {
+        SubspawnMap(TileMap1)
+        
+        await Tick(60s)
+        Expire
+    }
+}

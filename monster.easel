@@ -1,0 +1,59 @@
+pub collect World.AllMonsters
+
+pub fn monster.Monster(pos) {
+    use body=monster
+    use radius=TileRadius, shape=Circle
+    use speed=3, acceleration=0.25
+    use color=#0f0
+    
+    Body(pos=, noRotation=true)
+    PolygonCollider(category=Category:Monster)
+    PolygonSprite
+
+    give AllMonsters(monster)
+    
+    DecaySpeed(0.01)
+
+    on BeforePhysics {
+        let direction = CalculateDirectionToGift(Pos)
+        if !direction { continue }
+
+        Velocity = (Velocity + acceleration*direction).Truncate(speed)
+    }
+
+    on BeforeCollide that {
+        if that.Category.Overlaps(Category:Hero) {
+            repeat 5 { Spark(speed=10, luminous=1) }
+            Expire
+        }
+    }
+}
+
+let distancesToGifts = null
+fn CalculateDirectionToGift(pos) -> direction {
+    if !distancesToGifts {
+        distancesToGifts = CalculateDistanceField(AllGifts)
+    
+        // After everything moves because of the physics step,
+        // the distance field needs to be updated.
+        // Put this behavior on World so there is only one globally
+        {
+            use this=World
+            once AfterPhysics {
+                distancesToGifts = null
+            }
+        }
+    }
+
+    // First, try to use pathfinding
+    let waypoint = CalculateNavWaypoint(pos=, distances=distancesToGifts)
+    if waypoint {
+        return Direction(waypoint - pos)
+    }
+
+    // Otherwise just walk blindly towards nearest gift
+    let gift = pos.QueryNearest(filter=Category:Gift)
+    if !gift { return undefined }
+    
+    return Direction(gift.Pos - pos)
+}

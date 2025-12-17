@@ -1,0 +1,23 @@
+pub fn hero.Hero(pos, [owner]) {
+    use body=hero
+    use radius=TileRadius, shape=Circle
+    use speed=10
+    
+    Body(pos=, noRotation=true)
+    PolygonCollider(category=Category:Hero)
+    PolygonSprite(color=#f00)
+    
+    DecaySpeed(1)
+
+    on BeforePhysics {
+        ForcefulStep(Joystick * (speed/1s))
+    }
+}
+
+pub fn this.HeroSpawner(pos) {
+    SpawnEachPlayer {
+        Subspawn hero {
+            Hero(pos=)
+        }
+    }
+}
