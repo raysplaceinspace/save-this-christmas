@@ -8,7 +8,7 @@ pub fn gift.Gift(pos) {
     PolygonCollider(category=Category:Gift)
     PolygonSprite
 
-    DecaySpeed
+    DecaySpeed(0.5)
 
     give AllGifts(gift)
 

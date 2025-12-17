@@ -14,9 +14,10 @@ pub fn hero.Hero(pos, [owner]) {
     }
 }
 
-pub fn this.HeroSpawner(pos) {
+pub fn spawner.HeroSpawner(pos) {
     SpawnEachPlayer {
         Subspawn hero {
+            DespawnBefore(spawner)
             Hero(pos=)
         }
     }

@@ -1,8 +1,92 @@
-pub await fn PlayOneRound() {
+pub await fn PlayRounds() {
     await Spawn {
-        SubspawnMap(TileMap1)
+        with AllGifts {
+            if AllGifts.IsEmpty { Expire }
+        }
         
-        await Tick(60s)
+        await PlayOneRound {
+            Spawn monster {
+                Monster(pos=@(-BoundaryRadiusX, 0))
+            }
+        }
+
+        await PlayInterlude
+        
+        await PlayOneRound {
+            Spawn monster {
+                Monster(pos=@(BoundaryRadiusX, BoundaryRadiusY), speed=5, radiusFactor=0.5)
+            }
+            Spawn monster {
+                Monster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+            }
+        }
+
+        await PlayInterlude
+        
+        await PlayOneRound {
+            Spawn monster {
+                Monster(pos=@(-BoundaryRadiusX, BoundaryRadiusY), speed=5, radiusFactor=0.5)
+            }
+            Spawn monster {
+                Monster(pos=@(BoundaryRadiusX, -BoundaryRadiusY), speed=5, radiusFactor=0.5)
+            }
+            Spawn monster {
+                Monster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+            }
+        }
+
+        await PlayInterlude
+        
+        await PlayOneRound {
+            Spawn monster {
+                Monster(pos=@(BoundaryRadiusX, BoundaryRadiusY), speed=5, radiusFactor=0.5)
+            }
+            Spawn monster {
+                Monster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY), speed=5, radiusFactor=0.5)
+            }
+            Spawn monster {
+                Monster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+            }
+            Spawn monster {
+                Monster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+            }
+        }
+
+        await PlayInterlude
+        
+        await PlayOneRound {
+            Spawn monster {
+                Monster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+            }
+            Spawn monster {
+                Monster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+            }
+            Spawn monster {
+                Monster(pos=@(0, BoundaryRadiusY))
+            }
+        }
+    }
+}
+
+pub await fn PlayOneRound() |use this| {
+    await Spawn {
+        delve()
+        
+        while AllMonsters.Count > 0 {
+            await AllMonsters
+        }
         Expire
+    }
+}
+
+pub await fn PlayInterlude(duration=10s) {
+    await Spawn {
+        let end = Tick + duration
+
+        with Tick(1s) {
+            if Tick >= end { Expire }
+            let remaining = (end - Tick).Max(0)
+            Content { "Next night begins " + (remaining / 1s) + " seconds" }
+        }
     }
 }

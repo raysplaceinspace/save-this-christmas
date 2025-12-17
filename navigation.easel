@@ -1,8 +1,9 @@
-pub fn CalculateDistanceField(sources) -> distances {
-    let distances = []
-    let queue = []
+pub fn CalculateDistanceField(sources, costs) -> distances {
+    use distances = []
+    use queue = []
     for source in sources {
-        let index = PosToTileIndex(source.Pos)
+        let index = PosToTileIndex(@(source.Pos.X.Truncate(BoundaryRadiusX), source.Pos.Y.Truncate(BoundaryRadiusY)))
+        if index.IsNullish { continue }
         distances[index] = 0
         queue.Push(index)
     }
@@ -10,13 +11,13 @@ pub fn CalculateDistanceField(sources) -> distances {
     let numIterations = 0
     while !queue.IsEmpty {
         let index = queue.Shift
-        let nextDistance = distances[index] + 1
+        let parentDistance = distances[index]
         let pos = TileIndexToPos(index)
 
-        TryEnqueueNeighbor(pos=@(pos.X - TileSize, pos.Y), distance=nextDistance, distances=, queue=)
-        TryEnqueueNeighbor(pos=@(pos.X + TileSize, pos.Y), distance=nextDistance, distances=, queue=)
-        TryEnqueueNeighbor(pos=@(pos.X, pos.Y - TileSize), distance=nextDistance, distances=, queue=)
-        TryEnqueueNeighbor(pos=@(pos.X, pos.Y + TileSize), distance=nextDistance, distances=, queue=)
+        TryEnqueueNeighbor(pos=@(pos.X - TileSize, pos.Y), parentDistance=)
+        TryEnqueueNeighbor(pos=@(pos.X + TileSize, pos.Y), parentDistance=)
+        TryEnqueueNeighbor(pos=@(pos.X, pos.Y - TileSize), parentDistance=)
+        TryEnqueueNeighbor(pos=@(pos.X, pos.Y + TileSize), parentDistance=)
 
         numIterations += 1
     }
@@ -30,22 +31,22 @@ pub fn CalculateNavWaypoint(pos, distances) -> vector {
     let distance = distances[index]
     if distance.IsNullish { return undefined }
 
-    let waypoint = @(pos.X - TileSize, pos.Y)
-    if distances[PosToTileIndex(waypoint)] < distance { return waypoint }
-
-    waypoint = @(pos.X + TileSize, pos.Y)
-    if distances[PosToTileIndex(waypoint)] < distance { return waypoint }
-
-    waypoint = @(pos.X, pos.Y - TileSize)
+    let waypoint = @(pos.X, pos.Y - TileSize)
     if distances[PosToTileIndex(waypoint)] < distance { return waypoint }
 
     waypoint = @(pos.X, pos.Y + TileSize)
     if distances[PosToTileIndex(waypoint)] < distance { return waypoint }
 
+    waypoint = @(pos.X - TileSize, pos.Y)
+    if distances[PosToTileIndex(waypoint)] < distance { return waypoint }
+
+    waypoint = @(pos.X + TileSize, pos.Y)
+    if distances[PosToTileIndex(waypoint)] < distance { return waypoint }
+
     return undefined
 }
 
-fn PosToTileIndex(pos) -> index {
+pub fn PosToTileIndex(pos) -> index {
     let col = Round((pos.X + BoundaryRadiusX) / TileSize)
     if col < 0 || col >= NumCols { return undefined }
     
@@ -55,28 +56,20 @@ fn PosToTileIndex(pos) -> index {
     return row*NumCols + col
 }
 
-fn TileIndexToPos(index) -> pos {
+pub fn TileIndexToPos(index) -> pos {
     let col = index % NumCols
     let row = Floor(index / NumCols)
     return @(col*TileSize - BoundaryRadiusX, row*TileSize - BoundaryRadiusY)
 }
 
-fn IsTilePassable(pos) -> boolean {
-    return !pos.QueryAnyOverlapping(pos, filter=Category:Obstacle, solids=true, sensors=false)
-}
-
-fn TryEnqueueNeighbor(pos, distance, distances, queue) {
+fn TryEnqueueNeighbor(pos, parentDistance, [costs, distances, queue]) {
     let index = PosToTileIndex(pos)
     if index.IsNullish { return }
 
+    let distance = parentDistance + costs[index]
+
     let previousDistance = distances[index]
     if previousDistance <= distance { return }
-
-    if previousDistance == null { return } // Marked as impassable
-    if !IsTilePassable(pos=) {
-        distances[index] = null
-        return
-    }
     
     distances[index] = distance
     queue.Push(index)

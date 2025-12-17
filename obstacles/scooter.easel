@@ -1,0 +1,10 @@
+pub fn obstacle.Scooter(pos) {
+    use body=obstacle
+    use radius=TileRadius, shape=Equilateral(numPoints=4, angle=0.125rev)
+    
+    Body(pos=, noRotation=true)
+    PolygonCollider(category=Category:Crate)
+    PolygonSprite(color=#0cf)
+
+    DecaySpeed(0.5)
+}

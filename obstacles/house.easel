@@ -1,7 +1,7 @@
 pub fn obstacle.House1(pos) {
     use body=obstacle
-    use radius=TileRadius, shape=Equilateral(numPoints=4, angle=0.125rev)
+    use radius=TileRadius
     Body(pos=, immovable=true, noRotation=true)
-    PolygonCollider(category=Category:Obstacle)
-    PolygonSprite(color=#40f)
+    PolygonCollider(shape=Circle, category=Category:Obstacle)
+    PolygonSprite(shape=Equilateral(numPoints=4, angle=0.125rev), color=#40f)
 }

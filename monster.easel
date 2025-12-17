@@ -1,9 +1,9 @@
 pub collect World.AllMonsters
 
-pub fn monster.Monster(pos) {
+pub fn monster.Monster(pos, speed=3, radiusFactor=1) {
     use body=monster
-    use radius=TileRadius, shape=Circle
-    use speed=3, acceleration=0.25
+    use radius=radiusFactor*TileRadius, shape=Circle
+    use acceleration=0.5
     use color=#0f0
     
     Body(pos=, noRotation=true)
@@ -12,7 +12,7 @@ pub fn monster.Monster(pos) {
 
     give AllMonsters(monster)
     
-    DecaySpeed(0.01)
+    DecaySpeed(0.05)
 
     on BeforePhysics {
         let direction = CalculateDirectionToGift(Pos)
@@ -32,7 +32,7 @@ pub fn monster.Monster(pos) {
 let distancesToGifts = null
 fn CalculateDirectionToGift(pos) -> direction {
     if !distancesToGifts {
-        distancesToGifts = CalculateDistanceField(AllGifts)
+        distancesToGifts = CalculateDistanceField(AllGifts, costs=CalculateMonsterNavCosts)
     
         // After everything moves because of the physics step,
         // the distance field needs to be updated.
@@ -45,15 +45,50 @@ fn CalculateDirectionToGift(pos) -> direction {
         }
     }
 
-    // First, try to use pathfinding
+    let gift = pos.QueryNearest(filter=Category:Gift)
+    if !gift { return undefined } // No gifts remaining
+    
+    // Walk straight to the nearest gift if nothing is in the way
+    let directionToNearestGift = Direction(gift.Pos - pos)
+    if pos.QueryNearestAlongRay(direction=directionToNearestGift).Category.Overlaps(Category:Gift) {
+        return directionToNearestGift
+    }
+
+    // Otherwise, use pathfinding if possible
     let waypoint = CalculateNavWaypoint(pos=, distances=distancesToGifts)
     if waypoint {
         return Direction(waypoint - pos)
     }
 
-    // Otherwise just walk blindly towards nearest gift
-    let gift = pos.QueryNearest(filter=Category:Gift)
-    if !gift { return undefined }
+    return directionToNearestGift
+}
+
+fn CalculateMonsterNavCosts() -> costs {
+    let costs = []
     
-    return Direction(gift.Pos - pos)
+    for index in Range(0, NumRows*NumCols) {
+        let pos = TileIndexToPos(index)
+        let cost = 1
+        if pos.QueryAnyOverlapping(filter=Category:Crate) {
+            cost += 10
+        }
+        if pos.QueryAnyOverlapping(filter=Category:Obstacle | Category:Hero) {
+            cost += 100
+        }
+        costs.Push(cost)
+    }
+
+    for hero in Query(filter=Category:Hero) {
+        let heroPos = hero.Pos
+        for colOffset in RangeInclusive(-2, 2) {
+            for rowOffset in RangeInclusive(-2, 2) {
+                let pos = @(heroPos.X + TileSize*colOffset, heroPos.Y + TileSize*rowOffset)
+                let index = PosToTileIndex(pos)
+                if index.IsNullish { continue }
+                costs[index] += (5 - Distance(heroPos, pos)) / TileSize
+            }
+        }
+    }
+    
+    return costs
 }

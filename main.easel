@@ -8,11 +8,7 @@ pub game fn World.Main() {
     
     KeyboardVirtualJoystick(up=ArrowUp, left=ArrowLeft, right=ArrowRight, down=ArrowDown)
 
-    while !QueryAnyPlayer {
-        await PlayerJoined
-    }
-    
-    loop {
-        await PlayOneRound
-    }
+    SubspawnTileMap(TileMap1)
+
+    await PlayRounds
 }

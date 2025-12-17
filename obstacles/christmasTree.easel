@@ -1,7 +1,8 @@
 pub fn obstacle.ChristmasTree(pos) {
     use body=obstacle
-    use radius=TileRadius, shape=Equilateral(numPoints=4, angle=0.125rev)
+    use radius=TileRadius
+    
     Body(pos=, immovable=true, noRotation=true)
-    PolygonCollider(category=Category:Obstacle)
-    PolygonSprite(color=#0f3)
+    PolygonCollider(shape=Circle, category=Category:Crate)
+    PolygonSprite(shape=Equilateral(numPoints=4, angle=0.125rev), color=#0f3)
 }
