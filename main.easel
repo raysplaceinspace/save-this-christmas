@@ -1,5 +1,5 @@
 pub game fn World.Main() {
-    SolidBackground(color=#222)
+    SolidBackground(color=#282228)
     Camera(body=@(0,0), radius=@(BoundaryRadiusX, BoundaryRadiusY))
 
     ButtonRemap(KeyW, ArrowUp)
@@ -27,7 +27,10 @@ pub game fn World.Main() {
 
             InsetPanel {
                 P {
-                    "You saved " + AllGifts.Count + " out of " + maxNumGifts + " gifts"
+                    "Christmas presents saved: " + AllGifts.Count + " out of " + maxNumGifts
+                }
+                P {
+                    "Waves survived: " + NumWavesSurvived
                 }
             }
     

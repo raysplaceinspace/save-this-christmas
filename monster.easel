@@ -12,13 +12,13 @@ pub fn monster.BigMonster(pos) {
 
 fn monster.Monster(pos, speed=3, radius=TileRadius) {
     use body=monster
-    use shape=Circle
     use acceleration=0.5
-    use color=#0f0
+    use color=#0f0, layer=Layer:Monster
     
     Body(pos=, noRotation=true)
-    PolygonCollider(category=Category:Monster)
-    PolygonSprite
+    PolygonCollider(shape=Circle, category=Category:Monster)
+    PolygonSprite(Circle(radius=0), bloom=7, luminous=1)
+    ImageSprite(@grouch.png, radius=1.5*radius, screenOffset=@(0,-0.25), shadow=0.25)
 
     give AllMonsters(monster)
     

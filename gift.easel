@@ -3,10 +3,11 @@ pub collect World.AllGifts
 pub fn gift.Gift(pos) {
     use body=gift
     use radius=TileRadius, shape=Equilateral(numPoints=4, angle=0.125rev)
-    use color=#f80
+    use color=#f0f
     Body(pos=, noRotation=true)
     PolygonCollider(category=Category:Gift)
-    PolygonSprite
+    ImageSprite(@gift1.png, radius=1.25*radius, screenOffset=@(0,-0.25))
+    ImageSprite(@gift1.png, radius=1.25*radius, screenOffset=@(0,-0.25)+@(-0.25, 0.25), color=#0004, layer=Layer:Shadow)
 
     DecaySpeed(0.5)
 

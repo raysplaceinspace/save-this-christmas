@@ -1,3 +1,5 @@
+pub let NumWavesSurvived = 0
+
 pub await fn PlayRounds() {
     await Spawn {
         with AllGifts {
@@ -31,6 +33,7 @@ pub await fn PlayRounds() {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
 
         // Wave 2
         TopContent<instructions> {
@@ -43,6 +46,7 @@ pub await fn PlayRounds() {
             MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
 
         // Learn to barricade
         TopContent<instructions> {
@@ -67,6 +71,7 @@ pub await fn PlayRounds() {
             MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
 
         // Interlude
         TopContent<instructions> {
@@ -91,6 +96,7 @@ pub await fn PlayRounds() {
             MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
 
         // Interlude
         TopContent<instructions> {
@@ -115,6 +121,7 @@ pub await fn PlayRounds() {
             MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
         
         // Interlude
         TopContent<instructions> {
@@ -142,6 +149,7 @@ pub await fn PlayRounds() {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
         
         // Interlude
         TopContent<instructions> {
@@ -189,6 +197,7 @@ pub await fn PlayRounds() {
             LittleMonster(pos=@(BoundaryRadiusX, 0))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
         
         // Interlude
         TopContent<instructions> {
@@ -219,6 +228,7 @@ pub await fn PlayRounds() {
             LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
         
         // Interlude
         TopContent<instructions> {
@@ -287,6 +297,7 @@ pub await fn PlayRounds() {
             LittleMonster(pos=@(-BoundaryRadiusX, 0))
         }
         await AllMonstersGone
+        NumWavesSurvived += 1
 
         Expire
     }

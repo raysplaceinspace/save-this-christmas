@@ -6,7 +6,8 @@ pub fn obstacle.Scooter(pos) {
     
     Body(pos=, noRotation=true)
     PolygonCollider(category=Category:Crate)
-    PolygonSprite(color=#0cf)
+    ImageSprite(@crate.jpg)
+    PolygonSprite(shape=Equilateral(numPoints=4, angle=0.125rev), screenOffset=@(-0.25, 0.25), color=#0004, layer=Layer:Shadow)
 
     DecaySpeed(0.5)
 

@@ -3,5 +3,6 @@ pub fn obstacle.House1(pos) {
     use radius=TileRadius
     Body(pos=, immovable=true, noRotation=true)
     PolygonCollider(shape=Circle, category=Category:Obstacle)
-    PolygonSprite(shape=Equilateral(numPoints=4, angle=0.125rev), color=#40f)
+    ImageSprite(@crate2.jpg)
+    PolygonSprite(shape=Equilateral(numPoints=4, angle=0.125rev), screenOffset=@(-0.25, 0.25), color=#0004, layer=Layer:Shadow)
 }

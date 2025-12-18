@@ -1,13 +1,22 @@
 pub prop World.AnyHeroMoved
+pub prop hero.FlipHero
 
 pub fn hero.Hero(pos, [owner]) {
     use body=hero
-    use radius=TileRadius, shape=Circle
+    use radius=TileRadius, shape=Circle, layer=Layer:Hero
     use speed=10
     
     Body(pos=, noRotation=true)
     PolygonCollider(category=Category:Hero)
-    PolygonSprite(color=#f00)
+
+    with FlipHero {
+        ImageSprite(
+            @santa.png,
+            radius=1.5*radius, screenOffset=@(0,-0.5),
+            bodyScale=FlipHero ? @(-1,1) : @(1,1),
+            shadow=0.25,
+        )
+    }
     
     DecaySpeed(1)
 
@@ -15,6 +24,7 @@ pub fn hero.Hero(pos, [owner]) {
         if Joystick == @(0,0) { continue }
         AnyHeroMoved = true
         ForcefulStep(Joystick * (speed/1s))
+        FlipHero = Joystick.X > 0
     }
 }
 

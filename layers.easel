@@ -1,0 +1,3 @@
+pub const Layer:Shadow = -100
+pub const Layer:Monster = 10
+pub const Layer:Hero = 20
