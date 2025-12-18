@@ -1,3 +1,5 @@
+pub prop World.AnyScooterMoved
+
 pub fn obstacle.Scooter(pos) {
     use body=obstacle
     use radius=TileRadius, shape=Equilateral(numPoints=4, angle=0.125rev)
@@ -7,4 +9,11 @@ pub fn obstacle.Scooter(pos) {
     PolygonSprite(color=#0cf)
 
     DecaySpeed(0.5)
+
+    on AfterCollide {
+        if Distance(Pos, pos) > 0.75*TileRadius {
+            AnyScooterMoved = true
+            break
+        }
+    }
 }

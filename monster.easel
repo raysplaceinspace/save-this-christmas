@@ -1,8 +1,18 @@
 pub collect World.AllMonsters
 
-pub fn monster.Monster(pos, speed=3, radiusFactor=1) {
+pub fn monster.LittleMonster(pos) {
+    Monster(pos=, speed=5, radius=0.5*TileRadius)
+}
+pub fn monster.MediumMonster(pos) {
+    Monster(pos=, speed=3, radius=0.75*TileRadius)
+}
+pub fn monster.BigMonster(pos) {
+    Monster(pos=, speed=1.5, radius=1*TileRadius)
+}
+
+fn monster.Monster(pos, speed=3, radius=TileRadius) {
     use body=monster
-    use radius=radiusFactor*TileRadius, shape=Circle
+    use shape=Circle
     use acceleration=0.5
     use color=#0f0
     
@@ -70,7 +80,7 @@ fn CalculateMonsterNavCosts() -> costs {
         let pos = TileIndexToPos(index)
         let cost = 1
         if pos.QueryAnyOverlapping(filter=Category:Crate) {
-            cost += 10
+            cost += 5
         }
         if pos.QueryAnyOverlapping(filter=Category:Obstacle | Category:Hero) {
             cost += 100

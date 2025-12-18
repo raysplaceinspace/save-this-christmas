@@ -4,67 +4,303 @@ pub await fn PlayRounds() {
             if AllGifts.IsEmpty { Expire }
         }
         
-        await PlayOneRound {
-            Spawn monster {
-                Monster(pos=@(-BoundaryRadiusX, 0))
+        TopContent<instructions> {
+            InsetPanel {
+                P {
+                    TouchscreenOnly {
+                        "Use the "
+                        Span(bold=true, color=#0f0) { "on-screen joystick" }
+                        " to move"
+                    }
+                    NonTouchscreenOnly {
+                        "Use the "
+                        Span(bold=true, color=#0f0) { "Arrow Keys" }
+                        " to move"
+                    }
+                }
             }
         }
+        await AnyHeroMoved
+        await PlayInterlude(3s)
 
+        // Wave 1
+        TopContent<instructions> {
+            InsetPanel { "Oh no, not the Christmas grouches! Catch them before they steal all the Christmas gifts!" }
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        await AllMonstersGone
+
+        // Wave 2
+        TopContent<instructions> {
+            InsetPanel { "Oh no, there are more!" }
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await AllMonstersGone
+
+        // Learn to barricade
+        TopContent<instructions> {
+            InsetPanel { "There will be more coming. Maybe we should find something we can make barricades with..." }
+        }
+        while !AnyScooterMoved {
+            await AnyScooterMoved
+        }
+        TopContent<instructions> {
+            InsetPanel { "These scooters are great at blocking paths! Let's use them to barricade ourselves in!" }
+        }
+        await PlayInterlude(10s)
+
+        // Wave 3
+        TopContent<instructions> {
+            InsetPanel { "This grouch is fast!" }
+        }
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await AllMonstersGone
+
+        // Interlude
+        TopContent<instructions> {
+            InsetPanel { "It's not over. 6 more hours left!" }
+        }
+        await PlayInterlude(5s)
+
+        // Wave 4
+        TopContent<instructions> {
+            InsetPanel { "Here they come!" }
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await AllMonstersGone
+
+        // Interlude
+        TopContent<instructions> {
+            InsetPanel { "5 hours left until Christmas. Can we hold them off until then?" }
+        }
         await PlayInterlude
         
-        await PlayOneRound {
-            Spawn monster {
-                Monster(pos=@(BoundaryRadiusX, BoundaryRadiusY), speed=5, radiusFactor=0.5)
-            }
-            Spawn monster {
-                Monster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
-            }
+        // Wave 5
+        TopContent<instructions> {
+            InsetPanel { "Here they come!" }
         }
-
+        Spawn monster {
+            LittleMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await AllMonstersGone
+        
+        // Interlude
+        TopContent<instructions> {
+            InsetPanel { "4 hours left until Christmas. We can do this!" }
+        }
         await PlayInterlude
         
-        await PlayOneRound {
-            Spawn monster {
-                Monster(pos=@(-BoundaryRadiusX, BoundaryRadiusY), speed=5, radiusFactor=0.5)
-            }
-            Spawn monster {
-                Monster(pos=@(BoundaryRadiusX, -BoundaryRadiusY), speed=5, radiusFactor=0.5)
-            }
-            Spawn monster {
-                Monster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
-            }
+        // Wave 6
+        TopContent<instructions> {
+            InsetPanel { "Some big ones this time!" }
         }
-
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        await AllMonstersGone
+        
+        // Interlude
+        TopContent<instructions> {
+            InsetPanel { "3 hours left until Christmas. We're not letting the grouches ruin Christmas!" }
+        }
+        await PlayInterlude(3s)
+        
+        // Wave 7
+        TopContent<instructions> {
+            InsetPanel { "Here they come!" }
+        }
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(0, BoundaryRadiusY))
+        }
+        await MonstersReducedTo(2)
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        await MonstersReducedTo(3)
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(0, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(0, BoundaryRadiusY))
+        }
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        await AllMonstersGone
+        
+        // Interlude
+        TopContent<instructions> {
+            InsetPanel { "2 hours left until Christmas. We're not letting the grouches ruin Christmas!" }
+        }
         await PlayInterlude
         
-        await PlayOneRound {
-            Spawn monster {
-                Monster(pos=@(BoundaryRadiusX, BoundaryRadiusY), speed=5, radiusFactor=0.5)
-            }
-            Spawn monster {
-                Monster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY), speed=5, radiusFactor=0.5)
-            }
-            Spawn monster {
-                Monster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
-            }
-            Spawn monster {
-                Monster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
-            }
+        // Wave 8
+        TopContent<instructions> {
+            InsetPanel { "A bunch of little ones are coming!" }
         }
-
-        await PlayInterlude
+        Spawn monster {
+            LittleMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await Tick(2s), AllMonstersGone
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await Tick(2s), AllMonstersGone
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await Tick(5s), AllMonstersGone
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await AllMonstersGone
         
-        await PlayOneRound {
-            Spawn monster {
-                Monster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
-            }
-            Spawn monster {
-                Monster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
-            }
-            Spawn monster {
-                Monster(pos=@(0, BoundaryRadiusY))
-            }
+        // Interlude
+        TopContent<instructions> {
+            InsetPanel { "1 hours left. The final stand!" }
         }
+        await PlayInterlude
+
+        // Wave 9
+        TopContent<instructions> {
+            InsetPanel { "Time to save Christmas!" }
+        }
+        Spawn monster {
+            BigMonster(pos=@(0, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(0, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await MonstersReducedTo(6)
+        Spawn monster {
+            MediumMonster(pos=@(0, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(0, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await MonstersReducedTo(4)
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            LittleMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        await AllMonstersGone
+
+        Expire
+    }
+}
+
+await fn AllMonstersGone() {
+    while AllMonsters.Count > 0 {
+        await AllMonsters
+    }
+}
+
+await fn MonstersReducedTo(numMonsters) {
+    while AllMonsters.Count > numMonsters {
+        await AllMonsters
     }
 }
 
@@ -79,14 +315,26 @@ pub await fn PlayOneRound() |use this| {
     }
 }
 
-pub await fn PlayInterlude(duration=10s) {
+pub await fn PlayInterlude(duration=5s, msg="Grouches approaching...") {
     await Spawn {
         let end = Tick + duration
 
-        with Tick(1s) {
-            if Tick >= end { Expire }
-            let remaining = (end - Tick).Max(0)
-            Content { "Next night begins " + (remaining / 1s) + " seconds" }
+        BottomContent {
+            InsetPanel(use width=25, height=2, zStack=true, padding=0) {
+                HStack(align=Align:Center) {
+                    with Tick {
+                        let proportion = (end - Tick).Max(0) / duration
+                        if proportion <= 0 { Expire }
+                        FlatPanel(width=proportion*width, height=2, backgroundColor=#0c4, padding=0) { }
+                    }
+                }
+
+                ZOverlay {
+                    VStack(align=Align:Center, vAlign=VAlign:Middle) {
+                        P { %(msg) }
+                    }
+                }
+            }
         }
     }
 }

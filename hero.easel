@@ -1,3 +1,5 @@
+pub prop World.AnyHeroMoved
+
 pub fn hero.Hero(pos, [owner]) {
     use body=hero
     use radius=TileRadius, shape=Circle
@@ -10,6 +12,8 @@ pub fn hero.Hero(pos, [owner]) {
     DecaySpeed(1)
 
     on BeforePhysics {
+        if Joystick == @(0,0) { continue }
+        AnyHeroMoved = true
         ForcefulStep(Joystick * (speed/1s))
     }
 }
