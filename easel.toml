@@ -1,5 +1,6 @@
 [project]
 name = "Christmas Defenders"
+domain = "easel.games/@raysplaceinspace/christmas-defenders"
 
 [authors]
 "u1z.DHAVSGw" = "raysplaceinspace"

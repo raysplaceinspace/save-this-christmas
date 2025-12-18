@@ -1,4 +1,5 @@
 pub collect World.AllMonsters
+prop monster.FlipMonster
 
 pub fn monster.LittleMonster(pos) {
     Monster(pos=, speed=5, radius=0.5*TileRadius)
@@ -18,7 +19,16 @@ fn monster.Monster(pos, speed=3, radius=TileRadius) {
     Body(pos=, noRotation=true)
     PolygonCollider(shape=Circle, category=Category:Monster)
     PolygonSprite(Circle(radius=0), bloom=7, luminous=1, layer=Layer:Glow)
-    ImageSprite(@grouch.png, radius=1.5*radius, screenOffset=@(0,-0.25), shadow=0.25)
+
+    with FlipMonster {
+        ImageSprite(
+            @grouch.png,
+            radius=1.5*radius,
+            screenOffset=@(0,-0.25),
+            shadow=0.25,
+            bodyScale=FlipMonster ? @(-1, 1) : @(1, 1),
+        )
+    }
 
     give AllMonsters(monster)
     
@@ -29,6 +39,10 @@ fn monster.Monster(pos, speed=3, radius=TileRadius) {
         if !direction { continue }
 
         Velocity = (Velocity + acceleration*direction).Truncate(speed)
+
+        if direction.X != 0 {
+            FlipMonster = direction.X < 0
+        }
     }
 
     on BeforeCollide that {

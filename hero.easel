@@ -1,5 +1,9 @@
 pub prop World.AnyHeroMoved
 pub prop hero.FlipHero
+pub prop hero.IsHeroWalking
+
+const SantaWalkingImages = @santa*.png
+const SantaStandingImage = @santa3.png
 
 pub fn hero.Hero(pos, [owner]) {
     use body=hero
@@ -9,9 +13,10 @@ pub fn hero.Hero(pos, [owner]) {
     Body(pos=, noRotation=true)
     PolygonCollider(category=Category:Hero)
 
-    with FlipHero {
+    with FlipHero, IsHeroWalking {
         ImageSprite(
-            @santa.png,
+            IsHeroWalking ? SantaWalkingImages : SantaStandingImage,
+            frameInterval=0.075s,
             radius=1.5*radius, screenOffset=@(0,-0.5),
             bodyScale=FlipHero ? @(-1,1) : @(1,1),
             shadow=0.25,
@@ -21,10 +26,14 @@ pub fn hero.Hero(pos, [owner]) {
     DecaySpeed(1)
 
     on BeforePhysics {
-        if Joystick == @(0,0) { continue }
+        if Joystick == @(0,0) {
+            IsHeroWalking = false
+            continue
+        }
         AnyHeroMoved = true
         ForcefulStep(Joystick * (speed/1s))
         FlipHero = Joystick.X > 0
+        IsHeroWalking = true
     }
 }
 
