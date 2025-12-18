@@ -22,7 +22,7 @@ fn monster.Monster(pos, speed=3, radius=TileRadius) {
 
     with FlipMonster {
         ImageSprite(
-            @grouch.png,
+            @grouch*.png,
             radius=1.5*radius,
             screenOffset=@(0,-0.25),
             shadow=0.25,
