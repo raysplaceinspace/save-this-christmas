@@ -1,4 +1,4 @@
-pub fn obstacle.House1(pos) {
+pub fn obstacle.Block(pos) {
     use body=obstacle
     use radius=TileRadius
     Body(pos=, immovable=true, noRotation=true)

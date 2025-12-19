@@ -32,8 +32,11 @@ pub fn hero.Hero(pos, [owner]) {
         }
         AnyHeroMoved = true
         ForcefulStep(Joystick * (speed/1s))
-        FlipHero = Joystick.X > 0
         IsHeroWalking = true
+        
+        if Joystick.X != 0 {            
+            FlipHero = Joystick.X > 0
+        }
     }
 }
 

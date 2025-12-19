@@ -1,6 +1,6 @@
-pub prop World.AnyScooterMoved
+pub prop World.AnyCrateMoved
 
-pub fn obstacle.Scooter(pos) {
+pub fn obstacle.Crate(pos) {
     use body=obstacle
     use radius=TileRadius, shape=Equilateral(numPoints=4, angle=0.125rev)
     
@@ -13,7 +13,7 @@ pub fn obstacle.Scooter(pos) {
 
     on AfterCollide {
         if Distance(Pos, pos) > 0.75*TileRadius {
-            AnyScooterMoved = true
+            AnyCrateMoved = true
             break
         }
     }

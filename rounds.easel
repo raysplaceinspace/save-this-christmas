@@ -5,8 +5,75 @@ pub await fn PlayRounds() {
         with AllGifts {
             if AllGifts.IsEmpty { Expire }
         }
-        
-        TopContent<instructions> {
+
+        await PlayInstructions
+        await PlayWave1
+        await PlayWave2
+        await PlayInterlude(2s)
+        await PlayWave2b
+        await PlayLearnToBarricade
+        await PlayWave3
+        await PlayInterlude(5s) {
+            TopContent<instructions> {
+                InsetPanel { "It's not over. 8 more hours left!" }
+            }
+        }
+        await PlayWave4
+        await PlayInterlude {
+            TopContent<instructions> {
+                InsetPanel { "7 hours left until Christmas. Can we hold them off until then?" }
+            }
+        }
+        await PlayWave5
+        await PlayInterlude {
+            TopContent<instructions> {
+                InsetPanel { "6 hours left until Christmas. We can do this!" }
+            }
+        }
+        await PlayWave6
+        await PlayInterlude(3s) {
+            TopContent<instructions> {
+                InsetPanel { "5 hours left until Christmas. We are ready!" }
+            }
+        }
+        await PlayWave6b
+        await PlayInterlude(3s) {
+            TopContent<instructions> {
+                InsetPanel { "4 hours left until Christmas. Not long to go!" }
+            }
+        }
+        await PlayWave7
+        await PlayInterlude {
+            TopContent<instructions> {
+                InsetPanel { "3 hours left until Christmas. We're not letting the grouches ruin Christmas!" }
+            }
+        }
+        await PlayWave8
+        await PlayInterlude(5s) {
+            TopContent<instructions> {
+                InsetPanel { "2 hours left. Nearly there!" }
+            }
+        }
+        await PlayWave8b
+        await PlayInterlude {
+            TopContent<instructions> {
+                InsetPanel { "1 hour left. The final stand!" }
+            }
+        }
+        await PlayWave9
+
+        Expire
+    }
+}
+
+await fn this.PlayInstructions() {
+    await Subspawn {
+        TopContent {
+            InsetPanel {
+                P { "It's nearly time to deliver all the presents! Hopefully everything goes to plan this year..." }
+            }
+        }
+        BottomContent {
             InsetPanel {
                 P {
                     TouchscreenOnly {
@@ -23,21 +90,47 @@ pub await fn PlayRounds() {
             }
         }
         await AnyHeroMoved
-        await PlayInterlude(3s)
+        await Tick(3s)
+        Expire
+    }
+}
 
-        // Wave 1
+await fn this.PlayWave1() {
+    await PlayWave {
         TopContent<instructions> {
-            InsetPanel { "Oh no, not the Christmas grouches! Catch them before they steal all the Christmas gifts!" }
+            InsetPanel {
+                P {
+                    "A Christmas "
+                    Span(bold=true, color=#0f0) { "grouch" }
+                    "! "
+                    "Catch it before it destroys all the Christmas gifts!"
+                }
+            }
         }
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
+    }
+}
 
-        // Wave 2
+await fn this.PlayWave2() {
+    await PlayWave {
         TopContent<instructions> {
             InsetPanel { "Oh no, there are more!" }
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, 0.5 * BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, -0.5 * BoundaryRadiusY))
+        }
+    }
+}
+
+await fn this.PlayWave2b() {
+    await PlayWave {
+        TopContent<instructions> {
+            InsetPanel { "They are coming from both sides this time!" }
         }
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
@@ -45,21 +138,28 @@ pub await fn PlayRounds() {
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
+    }
+}
 
+await fn this.PlayLearnToBarricade() {
+    await Subspawn {
         // Learn to barricade
         TopContent<instructions> {
-            InsetPanel { "There will be more coming. Maybe we should find something we can make barricades with..." }
+            InsetPanel { "This would be easier if we found something to block their paths..." }
         }
-        while !AnyScooterMoved {
-            await AnyScooterMoved
+        while !AnyCrateMoved {
+            await AnyCrateMoved
         }
         TopContent<instructions> {
-            InsetPanel { "These scooters are great at blocking paths! Let's use them to barricade ourselves in!" }
+            InsetPanel { "We can use these wooden crates to make barricades!" }
         }
         await PlayInterlude(10s)
+        Expire
+    }
+}
 
+await fn this.PlayWave3() {
+    await PlayWave {
         // Wave 3
         TopContent<instructions> {
             InsetPanel { "This grouch is fast!" }
@@ -70,44 +170,31 @@ pub await fn PlayRounds() {
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
+    }
+}
 
-        // Interlude
-        TopContent<instructions> {
-            InsetPanel { "It's not over. 6 more hours left!" }
-        }
-        await PlayInterlude(5s)
-
-        // Wave 4
-        TopContent<instructions> {
-            InsetPanel { "Here they come!" }
-        }
-        Spawn monster {
-            MediumMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
-        }
+await fn this.PlayWave4() {
+    await PlayWave {
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
         }
         Spawn monster {
-            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+            MediumMonster(pos=@(BoundaryRadiusX, -0.5*BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, 0.5*BoundaryRadiusY))
         }
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
+    }
+}
 
-        // Interlude
-        TopContent<instructions> {
-            InsetPanel { "5 hours left until Christmas. Can we hold them off until then?" }
-        }
-        await PlayInterlude
-        
-        // Wave 5
-        TopContent<instructions> {
-            InsetPanel { "Here they come!" }
-        }
+await fn this.PlayWave5() {
+    await PlayWave {
         Spawn monster {
             LittleMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
         }
@@ -120,19 +207,34 @@ pub await fn PlayRounds() {
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
-        
-        // Interlude
-        TopContent<instructions> {
-            InsetPanel { "4 hours left until Christmas. We can do this!" }
-        }
-        await PlayInterlude
-        
-        // Wave 6
+    }
+}
+
+await fn this.PlayWave6 {
+    await PlayWave {
         TopContent<instructions> {
             InsetPanel { "Some big ones this time!" }
         }
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-0.5 * BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(0, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(0.5 * BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+    }
+}
+
+await fn this.PlayWave6b {
+    await PlayWave {
         Spawn monster {
             BigMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
         }
@@ -148,19 +250,11 @@ pub await fn PlayRounds() {
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
-        
-        // Interlude
-        TopContent<instructions> {
-            InsetPanel { "3 hours left until Christmas. We're not letting the grouches ruin Christmas!" }
-        }
-        await PlayInterlude(3s)
-        
-        // Wave 7
-        TopContent<instructions> {
-            InsetPanel { "Here they come!" }
-        }
+    }
+}
+
+await fn this.PlayWave7 {
+    await PlayWave {
         Spawn monster {
             BigMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
         }
@@ -196,18 +290,45 @@ pub await fn PlayRounds() {
         Spawn monster {
             LittleMonster(pos=@(BoundaryRadiusX, 0))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
-        
-        // Interlude
-        TopContent<instructions> {
-            InsetPanel { "2 hours left until Christmas. We're not letting the grouches ruin Christmas!" }
+    }
+}
+
+await fn this.PlayWave8 {
+    await PlayWave {
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
         }
-        await PlayInterlude
-        
-        // Wave 8
+        Spawn monster {
+            BigMonster(pos=@(-0.75 * BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-0.5 * BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-0.25 * BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(0, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(0.25 * BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(0.5 * BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-0.75 * BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+    }
+}
+
+await fn this.PlayWave8b {
+    await PlayWave {
         TopContent<instructions> {
-            InsetPanel { "A bunch of little ones are coming!" }
+            InsetPanel { "Looks like a sequence of little ones are coming, one after the other!" }
         }
         Spawn monster {
             LittleMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
@@ -224,21 +345,32 @@ pub await fn PlayRounds() {
         Spawn monster {
             LittleMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
+        await Tick(3s), AllMonstersGone
         Spawn monster {
             LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
-        
-        // Interlude
-        TopContent<instructions> {
-            InsetPanel { "1 hours left. The final stand!" }
+        await Tick(5s), AllMonstersGone
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await PlayInterlude
+        await Tick(3s), AllMonstersGone
+        Spawn monster {
+            LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await Tick(3s), AllMonstersGone
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            LittleMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+    }
+}
 
-        // Wave 9
+await fn this.PlayWave9 {
+    await PlayWave {
         TopContent<instructions> {
-            InsetPanel { "Time to save Christmas!" }
+            InsetPanel { "It's the final stand. Time to save Christmas!" }
         }
         Spawn monster {
             BigMonster(pos=@(0, BoundaryRadiusY))
@@ -296,10 +428,6 @@ pub await fn PlayRounds() {
         Spawn monster {
             LittleMonster(pos=@(-BoundaryRadiusX, 0))
         }
-        await AllMonstersGone
-        NumWavesSurvived += 1
-
-        Expire
     }
 }
 
@@ -326,8 +454,17 @@ pub await fn PlayOneRound() |use this| {
     }
 }
 
-pub await fn PlayInterlude(duration=5s, msg="Grouches approaching...") {
-    await Spawn {
+await fn this.PlayWave() |use this|? {
+    await Subspawn {
+        delve()
+        await AllMonstersGone
+        NumWavesSurvived += 1
+        Expire
+    }
+}
+
+await fn this.PlayInterlude(duration=5s, msg="Grouches approaching...") |use this|? {
+    await Subspawn {
         let end = Tick + duration
 
         BottomContent {
@@ -347,5 +484,7 @@ pub await fn PlayInterlude(duration=5s, msg="Grouches approaching...") {
                 }
             }
         }
+
+        delve()
     }
 }

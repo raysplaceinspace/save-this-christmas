@@ -44,7 +44,7 @@ pub fn this.SubspawnTileMap(tileMap) {
             // empty tile
         } else if t == 1 {
             Subspawn obstacle {
-                House1(pos=)
+                Block(pos=)
             }
         } else if t == 2 {
             Subspawn gift {
@@ -60,7 +60,7 @@ pub fn this.SubspawnTileMap(tileMap) {
             }
         } else if t == 5 {
             Subspawn obstacle {
-                Scooter(pos=)
+                Crate(pos=)
             }
         }
     }
