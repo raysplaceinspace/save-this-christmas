@@ -283,39 +283,71 @@ await fn this.PlayWave6b {
 await fn this.PlayWave7 {
     await PlayWave {
         Spawn monster {
-            BigMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+            LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
+        await Tick(1.5s)
         Spawn monster {
-            BigMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+            MediumMonster(pos=@(-0.5 * BoundaryRadiusX, -BoundaryRadiusY))
         }
-        Spawn monster {
-            MediumMonster(pos=@(0, BoundaryRadiusY))
-        }
-        await MonstersReducedTo(2)
-        Spawn monster {
-            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
-        }
-        Spawn monster {
-            MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
-        }
-        Spawn monster {
-            LittleMonster(pos=@(BoundaryRadiusX, 0))
-        }
-        await MonstersReducedTo(3)
-        Spawn monster {
-            BigMonster(pos=@(BoundaryRadiusX, 0))
-        }
-        Spawn monster {
-            BigMonster(pos=@(-BoundaryRadiusX, 0))
-        }
+        await Tick(1.5s)
         Spawn monster {
             MediumMonster(pos=@(0, -BoundaryRadiusY))
         }
+        await Tick(1.5s)
+        Spawn monster {
+            MediumMonster(pos=@(0.5 * BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await Tick(2.5s)
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, -0.5 * BoundaryRadiusY))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, 0))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            MediumMonster(pos=@(BoundaryRadiusX, 0.5 * BoundaryRadiusY))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            LittleMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await Tick(2.5s)
+        Spawn monster {
+            MediumMonster(pos=@(0.5*BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await Tick(1.5s)
         Spawn monster {
             MediumMonster(pos=@(0, BoundaryRadiusY))
         }
+        await Tick(1.5s)
         Spawn monster {
-            LittleMonster(pos=@(BoundaryRadiusX, 0))
+            MediumMonster(pos=@(-0.5*BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
+        }
+        await Tick(2.5s)
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, 0.5*BoundaryRadiusY))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, -0.5*BoundaryRadiusY))
+        }
+        await Tick(1.5s)
+        Spawn monster {
+            LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
     }
 }
@@ -490,12 +522,12 @@ await fn this.PlayWave() |use this|? {
     }
 }
 
-await fn this.PlayInterlude(duration=5s, msg="Grouches approaching...") |use this|? {
+await fn this.PlayInterlude(duration=10s, msg="Grouches approaching...") |use this|? {
     await Subspawn {
         let end = Tick + duration
 
         BottomContent {
-            InsetPanel(use width=25, height=2, zStack=true, padding=0) {
+            Panel(use width=25, height=2, zStack=true, padding=0) {
                 HStack(align=Align:Center) {
                     with Tick {
                         let proportion = (end - Tick).Max(0) / duration
