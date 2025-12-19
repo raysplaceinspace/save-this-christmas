@@ -40,7 +40,12 @@ pub await fn PlayRounds() {
         await PlayWave4
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "Candy canes give me a short burst of energy when I need them." }
+                InsetPanel {
+                    P {
+                        Span(bold=true, color=#f08) { "Candy canes" }
+                        " give me a short burst of energy when I need them."
+                    }
+                }
             }
         }
         await PlayWave5
