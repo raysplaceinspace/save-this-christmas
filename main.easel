@@ -8,6 +8,7 @@ pub game fn World.Main() {
     ButtonRemap(KeyD, ArrowRight)
     
     KeyboardVirtualJoystick(up=ArrowUp, left=ArrowLeft, right=ArrowRight, down=ArrowDown)
+    TouchscreenVirtualPointer
 
     SubspawnTileMap(TileMap1)
     let maxNumGifts = AllGifts.Count
