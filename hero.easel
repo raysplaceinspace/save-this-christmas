@@ -27,6 +27,22 @@ pub fn hero.Hero(pos, [owner]) {
     
     DecaySpeed(1)
 
+    on ButtonDown(Tap) {
+        const MinDragDistance = 0.5*TileRadius
+        behavior<dragControls> on BeforePhysics {
+            let delta = Pointer - Pos
+            if delta.Length >= MinDragDistance {
+                Joystick = delta.Direction
+            } else {
+                Joystick = @(0,0)
+            }
+        }
+    }
+    on ButtonUp(Tap) {
+        delete behavior<dragControls>
+        Joystick = @(0,0)
+    }
+
     on BeforePhysics {
         if Joystick == @(0,0) {
             IsHeroWalking = false
@@ -38,8 +54,8 @@ pub fn hero.Hero(pos, [owner]) {
         // So touchscreen players don't walk slower than keyboard players all the time
         let magnitude = Joystick.Length >= 0.1 ? 1 : Joystick.Length
         
-        // Quantize to one of the four grid directions so there is less walking into walls
-        let angle = Joystick.Angle.Quantize(0.25rev)
+        // Quantize to the grid so there is less walking into walls and getting snagged
+        let angle = Joystick.Angle.Quantize(0.125rev)
         
         ForcefulStep(angle.Direction * magnitude * (speed/1s))
         IsHeroWalking = true

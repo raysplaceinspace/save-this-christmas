@@ -1,4 +1,4 @@
-pub let NumWavesSurvived = 0
+pub prop World.NumWavesSurvived = 0
 pub const MaxNumWaves = 12
 
 pub await fn PlayRounds() {
@@ -10,11 +10,17 @@ pub await fn PlayRounds() {
         await PlayInstructions
         
         ToolbarRight {
-            HStack(hPadding=1) {
+            HStack(hPadding=1, gap=2) {
+                P {
+                    with NumWavesSurvived {
+                        "Waves remaining: "
+                        Span(bold=true) { %(MaxNumWaves - NumWavesSurvived) }
+                    }
+                }
                 P {
                     with AllGifts {
+                        "Gifts remaining: "
                         Span(bold=true) { %(AllGifts.Count) }
-                        " gifts remaining"
                     }
                 }
             }
@@ -28,49 +34,49 @@ pub await fn PlayRounds() {
         await PlayWave3
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "It's not over. 8 more hours left!" }
+                InsetPanel { "We can't let the grouches ruin Christmas!" }
             }
         }
         await PlayWave4
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "7 hours left until Christmas. Can we hold them off until then?" }
+                InsetPanel { "The grouches will disappear at midnight because they can't stand Christmas." }
             }
         }
         await PlayWave5
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "6 hours left until Christmas. We can do this!" }
+                InsetPanel { "These grouches are so annoying every year." }
             }
         }
         await PlayWave6
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "5 hours left until Christmas. We are ready!" }
+                InsetPanel { "The grouches really love Santa's gift storehouse." }
             }
         }
         await PlayWave6b
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "4 hours left until Christmas. Not long to go!" }
+                InsetPanel { "It's getting closer to midnight. Not long to go!" }
             }
         }
         await PlayWave7
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "3 hours left until Christmas. We're not letting the grouches ruin Christmas!" }
+                InsetPanel { "We're not letting the grouches ruin Christmas!" }
             }
         }
         await PlayWave8
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "2 hours left. Nearly there!" }
+                InsetPanel { "Next year we should lay down the barricades to start with." }
             }
         }
         await PlayWave8b
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "1 hour left. The final stand!" }
+                InsetPanel { "It's only minutes to midnight. This is the final stand!" }
             }
         }
         await PlayWave9
@@ -95,8 +101,7 @@ await fn this.PlayInstructions() {
             InsetPanel {
                 P {
                     TouchscreenOnly {
-                        "Use the "
-                        Span(bold=true, color=#0f0) { "on-screen joystick" }
+                        Span(bold=true, color=#0f0) { "Tap and drag" }
                         " to move"
                     }
                     NonTouchscreenOnly {
