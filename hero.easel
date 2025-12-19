@@ -31,7 +31,7 @@ pub fn hero.Hero(pos, [owner]) {
             continue
         }
         AnyHeroMoved = true
-        ForcefulStep(Joystick * (speed/1s))
+        ForcefulStep((Joystick.Length >= 0.25 ? Joystick.Direction : Joystick) * (speed/1s))
         IsHeroWalking = true
         
         if Joystick.X != 0 {            
