@@ -1,12 +1,75 @@
-pub page fn owner.HomePage {
-    ContentScreen {
-        Standout { %(ProjectName) }
+prop World.PlayerToBeat
 
-        VStack(gap=0.3) {
-            P(fontSize=0.8) { "Choose Your Name" }
-            PlayerNameEditor(width=25)
+pub page fn owner.HomePage {
+    Toolbar {
+        VolumeToggle
+        FlatButton(LeaderboardPage) {
+            Icon("fa-solid fa-trophy")
+            " Leaderboard"
+        }
+    }
+
+    ToolbarRight {
+        if IsUserLoggedIn {
+            FlatButton(ManageAccountIntent, backgroundColor=#fff1) { %(PlayerName) }
+        } else {
+            FlatButton(LoginIntent, backgroundColor=Color:Primary) { "Login" }
+        }
+    }
+
+    
+    once FetchLeaderboard([&OverallBestScore, &BestNumGiftsRemaining, &BestNumWavesSurvived], limit=1) players {
+        PlayerToBeat = players[0]
+    }
+    
+    ContentScreen {
+        VStack(align=Align:Center, vAlign=VAlign:Middle, gap=0, expand=1) {
+            VStack(align=Align:Center, vAlign=VAlign:Bottom, vPadding=1, backgroundColor=#000, expand=1) {
+                P(fontSize=0.8, color=#aaa) {
+                    "This game was made with "
+                    Link("https://easel.games") { "Easel" }
+                    " - the beginner-friendly online game engine!"
+                }
+    
+                Blank(expand=true)
+
+                HStack(gap=1, align=Align:Center) {
+                    Image(@grouch1.png, height=12)
+                    Image(@grouch2.png, height=12)
+                    Image(@grouch3.png, height=12)
+                }
+
+                Standout(margin=0, animate=Animate:Throb) { %(ProjectName) }
+            }
         }
 
-        RaisedButton(Main, backgroundColor=Color:Primary, width=25, fontSize=1.5) { "Play" }
+        VStack(vPadding=1, align=Align:Center, vAlign=VAlign:Top) {
+            VStack(gap=0.3) {
+                P(fontSize=0.8) { "Choose Your Name" }
+                PlayerNameEditor(width=25)
+            }
+                
+            RaisedButton(Main, backgroundColor=Color:Primary, width=25, fontSize=1.5) { "Play" }
+        
+            with PlayerToBeat {
+                P(fontSize=0.8) {
+                    if PlayerToBeat {
+                        use owner = PlayerToBeat
+                        Link(LeaderboardPage) { "Best defender: " }
+                        PlayerNameDisplay
+                        if BestNumGiftsRemaining > 0 {
+                            " saved " + BestNumGiftsRemaining + " gifts"
+                        } else {
+                            " survived " + BestNumWavesSurvived + " waves"
+                        }
+                    } else {
+                        Blank(height=1) // reserve space to avoid content layout shift
+                    }
+                }
+            }
+        }
+
+        Blank(height=1)
+    
     }
 }

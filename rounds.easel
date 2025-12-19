@@ -1,4 +1,5 @@
 pub let NumWavesSurvived = 0
+pub const MaxNumWaves = 12
 
 pub await fn PlayRounds() {
     await Spawn {

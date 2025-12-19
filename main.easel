@@ -17,31 +17,42 @@ pub game fn World.Main() {
     SubspawnTileMap(TileMap1)
     let maxNumGifts = AllGifts.Count
 
+    let start = Tick
     await PlayRounds
 
-    OverlayContent {
-        VStack(align=Align:Center) {
-            H1 {
-                FlyInWords(AllGifts.IsEmpty ? "Christmas is lost!" : "You saved Christmas!")
-            }
-
-            InsetPanel {
-                P {
-                    "Christmas presents saved: " + AllGifts.Count + " out of " + maxNumGifts
-                }
-                P {
-                    "Waves survived: " + NumWavesSurvived
-                }
-            }
-
-            if AllGifts.IsEmpty {
-                P {
-                    Span(bold=true) { "Tip: " }
-                    "Use the wooden crates to make a perimeter around your Christmas gifts"
-                }
-            }
+    for use owner in QueryPlayers {
+        use this=owner
+        
+        let isNewHighScore = SubmitToLeaderboard(
+            numWavesSurvived=NumWavesSurvived,
+            numGiftsRemaining=AllGifts.Count,
+            duration=Tick - start,
+        )
     
-            RaisedButton(Main, backgroundColor=Color:Primary) { "Play Again" }
+        OverlayContent {
+            VStack(align=Align:Center) {
+                H1 {
+                    FlyInWords(AllGifts.IsEmpty ? "Christmas is lost!" : "You saved Christmas!")
+                }
+    
+                InsetPanel {
+                    P {
+                        "Christmas presents saved: " + AllGifts.Count + " out of " + maxNumGifts
+                    }
+                    P {
+                        "Waves survived: " + NumWavesSurvived
+                    }
+                }
+    
+                if AllGifts.IsEmpty {
+                    P {
+                        Span(bold=true) { "Tip: " }
+                        "Use the wooden crates to make a perimeter around your Christmas gifts"
+                    }
+                }
+        
+                RaisedButton(Main, backgroundColor=Color:Primary) { "Play Again" }
+            }
         }
     }
 }

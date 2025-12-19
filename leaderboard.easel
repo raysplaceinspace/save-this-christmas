@@ -1,0 +1,89 @@
+// Only used for ranking, never shown to the user
+pub accumulator owner.OverallBestScore = 0
+
+pub accumulator owner.BestNumWavesSurvived
+pub accumulator owner.BestNumGiftsRemaining
+pub accumulator owner.BestDuration
+
+pub page fn owner.LeaderboardPage() {
+    Toolbar {
+        VolumeToggle
+    }
+    
+    Content {
+        H1 { "Best Defenders" }
+        if !IsUserLoggedIn && OverallBestScore > 0 {
+            ShinyPanel(align=Align:Center, vPadding=0.5, backgroundColor=#f60) {
+                P(fontSize=0.8) {
+                    Icon("fa-solid fa-triangle-exclamation")
+                    " Unregistered high scores get deleted after 90 days. To keep your score forever, please "
+                    Link(LoginIntent) { "login" }
+                    "."
+                }
+            }
+        }
+        InsetPanel(align=Align:Center, vPadding=1) {
+            P {
+                "Think you can do better? "
+            }
+            RaisedButton(Main, backgroundColor=Color:Primary, fontSize=1.5, width=25) { "Play" }
+        }
+        P(fontSize=0.8, color=#aaa) {
+            "This game was made with "
+            Link("https://easel.games") { "Easel" }
+            " - the beginner-friendly online game engine!"
+        }
+    }
+    
+    Content<leaderboard> {
+        P { "Loading..." }
+    }
+    
+    let ranking = await FetchLeaderboard([&OverallBestScore, &BestNumWavesSurvived, &BestDuration])
+    Content<leaderboard> {
+        let rank = 1
+        for player in ranking %%{
+            ShinyPanel(backgroundColor=#0fb, vPadding=0.4) {
+                HStack {
+                    P(fontSize=0.75, color=#eee, width=1.5, align=Align:Center) {
+                        %(rank)
+                    }
+                    P(fontSize=1.2, bold=true) {
+                        PlayerNameDisplay(player)
+                    }
+
+                    Blank(expand=true)
+
+                    if player.BestNumGiftsRemaining >= MaxNumGifts {
+                        P { %("All gifts saved in " + (BestDuration/1s).FormatWithPrecision(0) + " seconds" ) }
+                    } else if player.BestNumGiftsRemaining > 0 {
+                        P { %(player.BestNumGiftsRemaining + " gifts saved") }
+                    } else {
+                        P { %(player.BestNumWavesSurvived + " waves survived") }
+                    }
+                }
+            }
+
+            rank += 1
+        }
+
+        if ranking.Length == 0 {
+            P { "No one on the leaderboard... yet" }
+        }
+    }
+}
+
+pub fn owner.SubmitToLeaderboard(numWavesSurvived, numGiftsRemaining, duration) -> isNewHighScore {
+    if numWavesSurvived <= 0 { return false }
+    
+    let score = numGiftsRemaining * 100 + numWavesSurvived - (duration / 10m)
+    if score > OverallBestScore {
+        OverallBestScore(overwrite=score, showOnLeaderboard=true)
+        BestNumWavesSurvived = numWavesSurvived
+        BestNumGiftsRemaining = numGiftsRemaining
+        BestDuration = duration
+        return true
+    } else {
+        return false
+    }
+}

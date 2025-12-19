@@ -4,7 +4,7 @@ pub const TileSize = TileRadius*2
 pub const NumCols = 31
 pub const NumRows = 19
 
-
+pub const MaxNumGifts = 12
 pub const TileMap1 = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
