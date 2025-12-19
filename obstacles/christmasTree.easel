@@ -1,3 +1,5 @@
+pub prop World.AnyChristmasTreeMoved
+
 pub fn obstacle.ChristmasTree(pos) {
     use body=obstacle
     use radius=TileRadius
@@ -6,7 +8,14 @@ pub fn obstacle.ChristmasTree(pos) {
     PolygonCollider(shape=Equilateral(numPoints=4, angle=0.125rev), density=10, category=Category:Obstacle)
     DecaySpeed(0.75)
 
-    PolygonSprite(Circle(radius=0), bloom=15, color=#f80, luminous=1, layer=Layer:Glow)
     ImageSprite(@christmas-tree.png, radius=2*radius, screenOffset=@(0, -0.5), shadow=0.25)
     ImageSprite(@christmas-tree-glow.png, radius=2*radius, screenOffset=@(0, -0.5), luminous=1)
+    PolygonSprite(Circle(radius=0), bloom=15, color=#f80c, luminous=1, layer=Layer:Glow)
+    
+    on AfterCollide {
+        if Distance(Pos, pos) > 0.75*TileRadius {
+            AnyChristmasTreeMoved = true
+            break
+        }
+    }
 }

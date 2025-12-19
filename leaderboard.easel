@@ -39,7 +39,7 @@ pub page fn owner.LeaderboardPage() {
         P { "Loading..." }
     }
     
-    let ranking = await FetchLeaderboard([&OverallBestScore, &BestNumWavesSurvived, &BestDuration])
+    let ranking = await FetchLeaderboard([&OverallBestScore, &BestNumGiftsRemaining, &BestNumWavesSurvived, &BestDuration])
     Content<leaderboard> {
         let rank = 1
         for player in ranking %%{

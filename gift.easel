@@ -15,7 +15,7 @@ pub fn gift.Gift(pos) {
 
     on BeforeCollide that {
         if that.Category.Overlaps(Category:Monster) {
-            repeat 5 { Spark(speed=10, luminous=1) }
+            repeat 5 { Spark(speed=10, luminous=1, glare=1, bloom=3) }
             Expire
         }
     }

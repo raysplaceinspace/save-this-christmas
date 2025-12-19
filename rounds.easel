@@ -167,8 +167,10 @@ await fn this.PlayLearnToBarricade() {
         TopContent<instructions> {
             InsetPanel { "This would be easier if we found something to block their paths..." }
         }
-        while !AnyCrateMoved {
-            await AnyCrateMoved
+
+        let startWaiting = Tick
+        while !(AnyCrateMoved || AnyChristmasTreeMoved) {
+            await AnyCrateMoved, AnyChristmasTreeMoved
         }
         TopContent<instructions> {
             InsetPanel { "We can use these wooden crates to make barricades!" }
