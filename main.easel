@@ -33,10 +33,12 @@ pub game fn World.Main() {
     
                 InsetPanel {
                     P {
-                        "Christmas presents saved: " + AllGifts.Count + " out of " + maxNumGifts
+                        "Christmas gifts saved: "
+                        Span(bold=true) { %(AllGifts.Count + " out of " + maxNumGifts) }
                     }
                     P {
-                        "Waves survived: " + NumWavesSurvived
+                        "Waves survived: "
+                        Span(bold=true) { %(NumWavesSurvived + " out of " + MaxNumWaves) }
                     }
                 }
                 
@@ -49,7 +51,7 @@ pub game fn World.Main() {
                 if AllGifts.IsEmpty {
                     P {
                         Span(bold=true) { "Tip: " }
-                        "Use the wooden crates to make a perimeter around your Christmas gifts"
+                        "Use the wooden crates to make a blockade around your Christmas gifts!"
                     }
                 }
 
