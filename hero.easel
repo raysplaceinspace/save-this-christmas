@@ -45,6 +45,22 @@ pub fn spawner.HeroSpawner(pos) {
         Subspawn hero {
             DespawnBefore(spawner)
             Hero(pos=)
+
+            HeroEntranceStencil
+        }
+    }
+}
+
+pub fn hero.HeroEntranceStencil([owner]) {
+    use body=hero
+    use birth=Tick, duration=3s
+
+    with Tick {
+        let proportion = ((Tick - birth) / duration).Clamp(0, 1)
+        if proportion < 1 {
+            PolygonStencil<entrance>(Circle(radius=50*proportion), audience=owner)
+        } else {
+            delete PolygonStencil<entrance>
         }
     }
 }

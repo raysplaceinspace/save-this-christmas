@@ -7,13 +7,25 @@ pub await fn PlayRounds() {
         }
 
         await PlayInstructions
+        
+        ToolbarRight {
+            HStack(hPadding=1) {
+                P {
+                    with AllGifts {
+                        Span(bold=true) { %(AllGifts.Count) }
+                        " gifts remaining"
+                    }
+                }
+            }
+        }
+        
         await PlayWave1
         await PlayWave2
-        await PlayInterlude(2s)
+        await PlayInterlude(3s)
         await PlayWave2b
         await PlayLearnToBarricade
         await PlayWave3
-        await PlayInterlude(5s) {
+        await PlayInterlude {
             TopContent<instructions> {
                 InsetPanel { "It's not over. 8 more hours left!" }
             }
@@ -31,13 +43,13 @@ pub await fn PlayRounds() {
             }
         }
         await PlayWave6
-        await PlayInterlude(3s) {
+        await PlayInterlude {
             TopContent<instructions> {
                 InsetPanel { "5 hours left until Christmas. We are ready!" }
             }
         }
         await PlayWave6b
-        await PlayInterlude(3s) {
+        await PlayInterlude {
             TopContent<instructions> {
                 InsetPanel { "4 hours left until Christmas. Not long to go!" }
             }
@@ -49,7 +61,7 @@ pub await fn PlayRounds() {
             }
         }
         await PlayWave8
-        await PlayInterlude(5s) {
+        await PlayInterlude {
             TopContent<instructions> {
                 InsetPanel { "2 hours left. Nearly there!" }
             }
@@ -70,7 +82,12 @@ await fn this.PlayInstructions() {
     await Subspawn {
         TopContent {
             InsetPanel {
-                P { "It's nearly time to deliver all the presents! Hopefully everything goes to plan this year..." }
+                P {
+                    "It's nearly time to deliver all the "
+                    Span(bold=true, color=#f0f) { "Christmas gifts" }
+                    "! "
+                    "Hopefully everything goes to plan this year..."
+                }
             }
         }
         BottomContent {
@@ -103,7 +120,9 @@ await fn this.PlayWave1() {
                     "A Christmas "
                     Span(bold=true, color=#0f0) { "grouch" }
                     "! "
-                    "Catch it before it destroys all the Christmas gifts!"
+                    "Catch it before it destroys all the "
+                    Span(bold=true, color=#f0f) { "Christmas gifts" }
+                    "!"
                 }
             }
         }

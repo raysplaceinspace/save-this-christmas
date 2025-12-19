@@ -33,6 +33,13 @@ pub game fn World.Main() {
                     "Waves survived: " + NumWavesSurvived
                 }
             }
+
+            if AllGifts.IsEmpty {
+                P {
+                    Span(bold=true) { "Tip: " }
+                    "Use the wooden crates to make a perimeter around your Christmas gifts"
+                }
+            }
     
             RaisedButton(Main, backgroundColor=Color:Primary) { "Play Again" }
         }
