@@ -34,13 +34,13 @@ pub await fn PlayRounds() {
         await PlayWave3
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "We can't let the grouches ruin Christmas!" }
+                InsetPanel { "The grouches will disappear at midnight because they can't stand Christmas." }
             }
         }
         await PlayWave4
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "The grouches will disappear at midnight because they can't stand Christmas." }
+                InsetPanel { "Candy canes give me a short burst of energy when I need them." }
             }
         }
         await PlayWave5

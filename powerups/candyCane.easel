@@ -15,21 +15,22 @@ pub fn powerup.CandyCane(pos) {
         if that.Category.Overlaps(Category:Hero) {
             use hero=that
             hero.Subspawn {
+                use duration=10s
                 give HeroSpeedBoost(0.5)
 
-                let end = Tick + 10s
-                BottomLeftContent {
-                    Panel {
-                        P {
-                            Span(bold=true) { "Speed boost" }
-                            ": "
-
-                            with Tick(1s) {
-                                let remaining = (end - Tick).Max(0)
-                                if remaining <= 0 { Expire }
-                                %((remaining / 1s).Round + "s")
+                let end = Tick + duration
+                BottomContent {
+                    Panel(use width=25, use height=2, padding=0) {
+                        HStack(align=Align:Center) {
+                            with Tick {
+                                let proportion = (end - Tick).Max(0) / duration
+                                if proportion <= 0 { Expire }
+    
+                                FlatPanel(width=proportion*width, height=, padding=0, backgroundColor=#fc0) { }
                             }
                         }
+
+                        ZOverlay { "Speed Boost" }
                     }
                 }
                 once Tick(10s) { Expire }
