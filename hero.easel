@@ -9,11 +9,11 @@ const SantaStandingImage = @santa3.png
 
 pub fn hero.Hero(pos, [owner]) {
     use body=hero
-    use radius=TileRadius, shape=Circle, layer=Layer:Hero
+    use radius=TileRadius, layer=Layer:Hero
     use speed=10
     
     Body(pos=, noRotation=true)
-    PolygonCollider(category=Category:Hero)
+    PolygonCollider(category=Category:Hero, shape=Circle(radius=0.75*radius))
 
     with FlipHero, IsHeroWalking {
         ImageSprite(
