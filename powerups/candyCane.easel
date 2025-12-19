@@ -1,10 +1,14 @@
 pub fn powerup.CandyCane(pos) {
     use body=powerup
-    use radius=TileRadius, shape=Circle
+    use radius=TileRadius
     use layer=Layer:Powerup
     
     Body(pos=, noRotation=true)
-    PolygonCollider(category=Category:Powerup, collideWith=Category:Tangible ^ Category:Monster)
+    PolygonCollider(
+        shape=Circle(radius=0.25*radius), // Small collider so you don't accidentally pick it up
+        category=Category:Powerup,
+        collideWith=Category:Tangible ^ Category:Monster,
+    )
     ImageSprite(@candy-cane.png, shadow=0.5)
 
     on BeforeCollide that {
