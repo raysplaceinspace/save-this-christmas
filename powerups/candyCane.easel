@@ -1,0 +1,36 @@
+pub fn powerup.CandyCane(pos) {
+    use body=powerup
+    use radius=TileRadius, shape=Circle
+    use layer=Layer:Powerup
+    
+    Body(pos=, noRotation=true)
+    PolygonCollider(category=Category:Powerup, collideWith=Category:Tangible ^ Category:Monster)
+    ImageSprite(@candy-cane.png, shadow=0.5)
+
+    on BeforeCollide that {
+        if that.Category.Overlaps(Category:Hero) {
+            use hero=that
+            hero.Subspawn {
+                give HeroSpeedBoost(0.5)
+
+                let end = Tick + 10s
+                BottomLeftContent {
+                    Panel {
+                        P {
+                            Span(bold=true) { "Speed boost" }
+                            ": "
+
+                            with Tick(1s) {
+                                let remaining = (end - Tick).Max(0)
+                                if remaining <= 0 { Expire }
+                                %((remaining / 1s).Round + "s")
+                            }
+                        }
+                    }
+                }
+                once Tick(10s) { Expire }
+            }
+            Expire
+        }
+    }
+}

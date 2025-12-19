@@ -43,6 +43,12 @@ pub game fn World.Main() {
                         "Waves survived: " + NumWavesSurvived
                     }
                 }
+                
+                if isNewHighScore {
+                    P(bold=true, color=#e580ff, fontSize=1.4) {
+                        "New high score!"
+                    }
+                }
     
                 if AllGifts.IsEmpty {
                     P {
@@ -50,8 +56,11 @@ pub game fn World.Main() {
                         "Use the wooden crates to make a perimeter around your Christmas gifts"
                     }
                 }
-        
-                RaisedButton(Main, backgroundColor=Color:Primary) { "Play Again" }
+
+                HStack(align=Align:Center) {
+                    RaisedButton(Main, backgroundColor=Color:Primary) { "Play Again" }
+                    RaisedButton(LeaderboardPage, backgroundColor=Color:Secondary) { "High Scores" }
+                }
             }
         }
     }

@@ -2,6 +2,8 @@ pub prop World.AnyHeroMoved
 pub prop hero.FlipHero
 pub prop hero.IsHeroWalking
 
+pub collect hero.HeroSpeedBoost ~ Sum
+
 const SantaWalkingImages = @santa*.png
 const SantaStandingImage = @santa3.png
 
@@ -30,9 +32,18 @@ pub fn hero.Hero(pos, [owner]) {
             IsHeroWalking = false
             continue
         }
-        AnyHeroMoved = true
-        ForcefulStep((Joystick.Length >= 0.25 ? Joystick.Direction : Joystick) * (speed/1s))
+
+        use speed = speed * (1 + HeroSpeedBoost)
+        
+        // So touchscreen players don't walk slower than keyboard players all the time
+        let magnitude = Joystick.Length >= 0.1 ? 1 : Joystick.Length
+        
+        // Quantize to one of the four grid directions so there is less walking into walls
+        let angle = Joystick.Angle.Quantize(0.25rev)
+        
+        ForcefulStep(angle.Direction * magnitude * (speed/1s))
         IsHeroWalking = true
+        AnyHeroMoved = true
         
         if Joystick.X != 0 {            
             FlipHero = Joystick.X > 0

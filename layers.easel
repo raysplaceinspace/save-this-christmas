@@ -1,4 +1,5 @@
 pub const Layer:Shadow = -100
 pub const Layer:Glow = -50
+pub const Layer:Powerup = -10
 pub const Layer:Monster = 0
 pub const Layer:Hero = 0
