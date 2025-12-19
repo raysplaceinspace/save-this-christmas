@@ -3,7 +3,7 @@ pub fn obstacle.ChristmasTree(pos) {
     use radius=TileRadius
     
     Body(pos=, noRotation=true)
-    PolygonCollider(shape=Circle, density=10, category=Category:Obstacle)
+    PolygonCollider(shape=Equilateral(numPoints=4, angle=0.125rev), density=10, category=Category:Obstacle)
     DecaySpeed(0.75)
 
     PolygonSprite(Circle(radius=0), bloom=15, color=#f80, luminous=1, layer=Layer:Glow)
