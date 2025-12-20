@@ -252,7 +252,7 @@ await fn this.PlayWave5() {
             MediumMonster(pos=@(-BoundaryRadiusX, -0.25*BoundaryRadiusY))
         }
         Spawn monster {
-            MediumMonster(pos=@(-BoundaryRadiusX, 0))
+            LittleMonster(pos=@(-BoundaryRadiusX, 0))
         }
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0.25*BoundaryRadiusY))
@@ -281,13 +281,20 @@ await fn this.PlayWave6 {
             BigMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
         Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
+        }
+        await Tick(2s)
+        Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, 0))
         }
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
         Spawn monster {
-            MediumMonster(pos=@(0.5*BoundaryRadiusX, -BoundaryRadiusY))
+            MediumMonster(pos=@(0, -BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(0, BoundaryRadiusY))
         }
     }
 }
@@ -298,10 +305,10 @@ await fn this.PlayWave6b() {
             LittleMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
         }
         Spawn monster {
-            MediumMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
+            MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
         Spawn monster {
-            LittleMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+            LittleMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
         }
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
@@ -320,67 +327,67 @@ await fn this.PlayWave7 {
         Spawn monster {
             LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(-0.5 * BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(0, -BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(0.5 * BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, -BoundaryRadiusY))
         }
-        await Tick(2.5s)
+        await Tick(2s)
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, -0.5 * BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, 0))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, 0.5 * BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             LittleMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
         }
-        await Tick(2.5s)
+        await Tick(2s)
         Spawn monster {
             MediumMonster(pos=@(0.5*BoundaryRadiusX, BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(0, BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(-0.5*BoundaryRadiusX, BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
         }
-        await Tick(2.5s)
+        await Tick(2s)
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0.5*BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, -0.5*BoundaryRadiusY))
         }
-        await Tick(1.5s)
+        await Tick(1s)
         Spawn monster {
             LittleMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
