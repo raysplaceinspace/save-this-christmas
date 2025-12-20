@@ -49,6 +49,8 @@ fn monster.Monster(pos, speed=3, radius=TileRadius) {
         if that.Category.Overlaps(Category:Hero) {
             repeat 5 { Spark(splatter=1, speed=10, luminous=1, bloom=3, glare=1) }
             Expire
+        } else if that.Category.Overlaps(Category:Gift) {
+            Expire
         }
     }
 }
