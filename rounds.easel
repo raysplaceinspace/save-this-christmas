@@ -26,6 +26,7 @@ pub await fn PlayRounds() {
             }
         }
         
+        CommenceGame
         await PlayWave1
         await PlayWave2
         await PlayInterlude(3s)
@@ -85,6 +86,7 @@ pub await fn PlayRounds() {
             }
         }
         await PlayWave9
+        ConcludeGame
 
         Expire
     }

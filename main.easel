@@ -7,6 +7,12 @@ pub game fn World.Main() {
         VolumeToggle
     }
 
+    once GameCommenced {
+        ToolbarBack<hideBack> { }
+        await GameConcluded
+        delete ToolbarBack<hideBack>
+    }
+
     ButtonRemap(KeyW, ArrowUp)
     ButtonRemap(KeyA, ArrowLeft)
     ButtonRemap(KeyS, ArrowDown)
