@@ -1,16 +1,22 @@
 pub fn CalculateDistanceField(sources, costs) -> distances {
     use distances = []
-    use queue = []
+    use closeQueue = [] // queue with neighbors only gets priority
+    use farQueue = [] // everything else
     for source in sources {
         let index = PosToTileIndex(@(source.Pos.X.Truncate(BoundaryRadiusX), source.Pos.Y.Truncate(BoundaryRadiusY)))
         if index.IsNullish { continue }
         distances[index] = 0
-        queue.Push(index)
+        closeQueue.Push(index)
     }
 
     let numIterations = 0
-    while !queue.IsEmpty {
-        let index = queue.Shift
+    loop {
+        let index = closeQueue.Shift
+        if index.IsNullish {
+            index = farQueue.Shift
+            if index.IsNullish { break }
+        }
+        
         let parentDistance = distances[index]
         let pos = TileIndexToPos(index)
 
@@ -62,15 +68,21 @@ pub fn TileIndexToPos(index) -> pos {
     return @(col*TileSize - BoundaryRadiusX, row*TileSize - BoundaryRadiusY)
 }
 
-fn TryEnqueueNeighbor(pos, parentDistance, [costs, distances, queue]) {
+fn TryEnqueueNeighbor(pos, parentDistance, [costs, distances, closeQueue, farQueue]) {
     let index = PosToTileIndex(pos)
     if index.IsNullish { return }
 
-    let distance = parentDistance + costs[index]
+    let cost = costs[index]
+    let distance = parentDistance + cost
 
     let previousDistance = distances[index]
     if previousDistance <= distance { return }
     
     distances[index] = distance
-    queue.Push(index)
+
+    if cost <= 1 {
+        closeQueue.Push(index)
+    } else {
+        farQueue.Push(index)
+    }
 }
