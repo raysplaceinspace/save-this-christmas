@@ -243,13 +243,25 @@ await fn this.PlayWave5() {
             MediumMonster(pos=@(-BoundaryRadiusX, -BoundaryRadiusY))
         }
         Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, -0.75*BoundaryRadiusY))
+        }
+        Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, -0.5*BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, -0.25*BoundaryRadiusY))
         }
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
         Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, 0.25*BoundaryRadiusY))
+        }
+        Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0.5*BoundaryRadiusY))
+        }
+        Spawn monster {
+            MediumMonster(pos=@(-BoundaryRadiusX, 0.75*BoundaryRadiusY))
         }
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, BoundaryRadiusY))
@@ -274,6 +286,9 @@ await fn this.PlayWave6 {
         Spawn monster {
             MediumMonster(pos=@(-BoundaryRadiusX, 0))
         }
+        Spawn monster {
+            MediumMonster(pos=@(0.5*BoundaryRadiusX, -BoundaryRadiusY))
+        }
     }
 }
 
@@ -290,6 +305,12 @@ await fn this.PlayWave6b() {
         }
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, BoundaryRadiusY))
+        }
+        Spawn monster {
+            BigMonster(pos=@(-BoundaryRadiusX, 0))
+        }
+        Spawn monster {
+            BigMonster(pos=@(BoundaryRadiusX, 0))
         }
     }
 }
