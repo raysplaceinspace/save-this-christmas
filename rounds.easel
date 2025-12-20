@@ -35,7 +35,14 @@ pub await fn PlayRounds() {
         await PlayWave3
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "The grouches will disappear at midnight because they can't stand Christmas." }
+                InsetPanel {
+                    P {
+                        "Time to use the "
+                        Span(bold=true, color=#f80) { "wooden crates" }
+                        " to blockade the perimeter around the "
+                        Span(bold=true, color=#f0f) { "Christmas gifts" }
+                    }
+                }
             }
         }
         await PlayWave4
@@ -52,7 +59,7 @@ pub await fn PlayRounds() {
         await PlayWave5
         await PlayInterlude {
             TopContent<instructions> {
-                InsetPanel { "These grouches are so annoying every year." }
+                InsetPanel { "The grouches always leave at midnight because they hate Christmas. Not long to go!" }
             }
         }
         await PlayWave6
@@ -177,15 +184,18 @@ await fn this.PlayLearnToBarricade() {
     await Subspawn {
         // Learn to barricade
         TopContent<instructions> {
-            InsetPanel { "This would be easier if we found something to block their paths..." }
+            InsetPanel {
+                P {
+                    "Use the "
+                    Span(bold=true, color=#f80) { "wooden crates" }
+                    " to blockade the perimeter around your "
+                    Span(bold=true, color=#f0f) { "Christmas gifts" }
+                }
+            }
         }
 
-        let startWaiting = Tick
         while !(AnyCrateMoved || AnyChristmasTreeMoved) {
             await AnyCrateMoved, AnyChristmasTreeMoved
-        }
-        TopContent<instructions> {
-            InsetPanel { "We can use these wooden crates to make barricades!" }
         }
         await PlayInterlude(10s)
         Expire
