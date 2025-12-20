@@ -6,6 +6,8 @@ pub accumulator owner.BestNumGiftsRemaining
 pub accumulator owner.BestDuration
 
 pub page fn owner.LeaderboardPage() {
+    Music(@saveThisChristmas.mp3, loop=true)
+    
     Toolbar {
         VolumeToggle
     }

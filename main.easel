@@ -1,6 +1,11 @@
 pub game fn World.Main() {
+    Music(@saveThisChristmas.mp3, loop=true)
     SolidBackground(color=#282228)
     Camera(body=@(0,0), radius=@(BoundaryRadiusX, BoundaryRadiusY))
+
+    Toolbar {
+        VolumeToggle
+    }
 
     ButtonRemap(KeyW, ArrowUp)
     ButtonRemap(KeyA, ArrowLeft)
