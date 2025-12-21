@@ -57,7 +57,7 @@ pub page fn owner.LeaderboardPage() {
                     Blank(expand=true)
 
                     if player.BestNumGiftsRemaining >= MaxNumGifts {
-                        P { %("All gifts saved in " + (BestDuration/1s).FormatWithPrecision(0) + " seconds" ) }
+                        P { %("All gifts saved in " + (player.BestDuration/1m).FormatWithDecimals(2) + " minutes" ) }
                     } else if player.BestNumGiftsRemaining > 0 {
                         P { %(player.BestNumGiftsRemaining + " gifts saved") }
                     } else {

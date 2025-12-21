@@ -24,7 +24,6 @@ pub game fn World.Main() {
     SubspawnTileMap(TileMap1)
     let maxNumGifts = AllGifts.Count
 
-    let start = Tick
     await PlayRounds
 
     for use owner in QueryPlayers {
@@ -33,7 +32,7 @@ pub game fn World.Main() {
         let isNewHighScore = SubmitToLeaderboard(
             numWavesSurvived=NumWavesSurvived,
             numGiftsRemaining=AllGifts.Count,
-            duration=Tick - start,
+            duration=Tick,
         )
     
         OverlayContent {
