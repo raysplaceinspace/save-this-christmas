@@ -155,7 +155,7 @@ await fn this.PlayWave1() {
 await fn this.PlayWave2() {
     await PlayWave {
         TopContent<instructions> {
-            InsetPanel { "Oh no, there are more!" }
+            InsetPanel { "Oh no, there are more! Catch them both!" }
         }
         Spawn monster {
             MediumMonster(pos=@(BoundaryRadiusX, 0.5 * BoundaryRadiusY))
