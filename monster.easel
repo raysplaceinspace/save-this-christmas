@@ -18,7 +18,8 @@ pub fn World.MonsterNavigationSystem() {
         while AllMonsters.IsEmpty {
             await AllMonsters
         }
-        DistancesToGifts = await CalculateDistanceField(AllGifts, costs=CalculateMonsterNavCosts)
+        let costs = await CalculateMonsterNavCosts
+        DistancesToGifts = await CalculateDistanceField(AllGifts, costs=)
     }
 }
 
@@ -85,10 +86,10 @@ fn CalculateDirectionToGift(pos) -> direction {
     return directionToNearestGift
 }
 
-fn CalculateMonsterNavCosts() -> costs {
+await fn CalculateMonsterNavCosts(iterationsPerTick=100) -> costs {
     let costs = []
-    
-    for index in Range(0, NumRows*NumCols) {
+
+    for numIterations, index in Range(0, NumRows*NumCols) {
         let pos = TileIndexToPos(index)
         let cost = 1
         if pos.QueryAnyOverlapping(filter=Category:Crate) {
@@ -98,6 +99,8 @@ fn CalculateMonsterNavCosts() -> costs {
             cost += 100
         }
         costs.Push(cost)
+
+        if numIterations % iterationsPerTick == 0 { await Tick }
     }
 
     for hero in Query(filter=Category:Hero) {

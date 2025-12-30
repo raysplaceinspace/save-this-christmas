@@ -6,11 +6,11 @@ pub game fn World.Main() {
     Toolbar {
         VolumeToggle
     }
-
-    once GameCommenced {
-        ToolbarBack<hideBack> { }
-        await GameConcluded
-        delete ToolbarBack<hideBack>
+    ToolbarBack {
+        FlatButton(HomePage) {
+            Icon("fa-solid fa-chevron-left")
+            " Exit"
+        }
     }
 
     ButtonRemap(KeyW, ArrowUp)
