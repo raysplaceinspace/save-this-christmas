@@ -1,4 +1,4 @@
-pub fn CalculateDistanceField(sources, costs) -> distances {
+pub await fn CalculateDistanceField(sources, costs, iterationsPerTick=100) -> distances {
     use distances = []
     use closeQueue = [] // queue with neighbors only gets priority
     use farQueue = [] // everything else
@@ -26,11 +26,15 @@ pub fn CalculateDistanceField(sources, costs) -> distances {
         TryEnqueueNeighbor(pos=@(pos.X, pos.Y + TileSize), parentDistance=)
 
         numIterations += 1
+
+        if numIterations % iterationsPerTick == 0 { await Tick }
     }
     return distances
 }
 
 pub fn CalculateNavWaypoint(pos, distances) -> vector {
+    if !distances { return undefined }
+    
     let index = PosToTileIndex(pos)
     if index.IsNullish { return undefined }
     

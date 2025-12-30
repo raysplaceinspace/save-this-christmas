@@ -11,6 +11,17 @@ pub fn monster.BigMonster(pos) {
     Monster(pos=, speed=1.5, radius=1*TileRadius)
 }
 
+
+let DistancesToGifts = null
+pub fn World.MonsterNavigationSystem() {
+    on Tick {
+        while AllMonsters.IsEmpty {
+            await AllMonsters
+        }
+        DistancesToGifts = await CalculateDistanceField(AllGifts, costs=CalculateMonsterNavCosts)
+    }
+}
+
 fn monster.Monster(pos, speed=3, radius=TileRadius) {
     use body=monster
     use acceleration=0.5
@@ -55,22 +66,7 @@ fn monster.Monster(pos, speed=3, radius=TileRadius) {
     }
 }
 
-let distancesToGifts = null
 fn CalculateDirectionToGift(pos) -> direction {
-    if !distancesToGifts {
-        distancesToGifts = CalculateDistanceField(AllGifts, costs=CalculateMonsterNavCosts)
-    
-        // After everything moves because of the physics step,
-        // the distance field needs to be updated.
-        // Put this behavior on World so there is only one globally
-        {
-            use this=World
-            once AfterPhysics {
-                distancesToGifts = null
-            }
-        }
-    }
-
     let gift = pos.QueryNearest(filter=Category:Gift)
     if !gift { return undefined } // No gifts remaining
     
@@ -81,7 +77,7 @@ fn CalculateDirectionToGift(pos) -> direction {
     }
 
     // Otherwise, use pathfinding if possible
-    let waypoint = CalculateNavWaypoint(pos=, distances=distancesToGifts)
+    let waypoint = CalculateNavWaypoint(pos=, distances=DistancesToGifts)
     if waypoint {
         return Direction(waypoint - pos)
     }
