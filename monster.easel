@@ -1,4 +1,6 @@
+pub prop World.NumMonstersDestroyed = 0
 pub collect World.AllMonsters
+
 prop monster.FlipMonster
 
 pub fn monster.LittleMonster(pos) {
@@ -59,6 +61,7 @@ fn monster.Monster(pos, speed=3, radius=TileRadius) {
 
     on BeforeCollide that {
         if that.Category.Overlaps(Category:Hero) {
+            NumMonstersDestroyed += 1
             repeat 5 { Spark(splatter=1, speed=10, luminous=1, bloom=3, glare=1) }
             Expire
         } else if that.Category.Overlaps(Category:Gift) {

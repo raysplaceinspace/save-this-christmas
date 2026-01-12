@@ -27,7 +27,9 @@ pub await fn PlayRounds() {
         }
         
         CommenceGame
-        await PlayWave1
+        while NumMonstersDestroyed <= 0 {
+            await PlayWave1
+        }
         await PlayWave2
         await PlayInterlude(3s)
         await PlayWave2b
