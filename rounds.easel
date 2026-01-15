@@ -27,9 +27,7 @@ pub await fn PlayRounds() {
         }
         
         CommenceGame
-        while NumMonstersDestroyed <= 0 {
-            await PlayWave1
-        }
+        await PlayWave1
         await PlayWave2
         await PlayInterlude(3s)
         await PlayWave2b
@@ -148,8 +146,12 @@ await fn this.PlayWave1() {
                 }
             }
         }
-        Spawn monster {
-            MediumMonster(pos=@(-BoundaryRadiusX, 0))
+
+        while NumMonstersDestroyed <= 0 {
+            Spawn monster {
+                MediumMonster(pos=@(-BoundaryRadiusX, 0))
+            }
+            await AllMonstersGone
         }
     }
 }
