@@ -68,7 +68,7 @@ pub game fn World.Main() {
 
                 HStack(align=Align:Center) {
                     RaisedButton(Main, backgroundColor=Color:Primary) { "Play Again" }
-                    RaisedButton(LeaderboardPage, backgroundColor=Color:Secondary) { "High Scores" }
+                    RaisedButton(HomePage, backgroundColor=Color:Secondary) { "High Scores" }
                 }
             }
         }
